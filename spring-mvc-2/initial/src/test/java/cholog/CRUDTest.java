@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CRUDTest {
     @Test
     void create() {
-        var response = RestAssured
+        final var response = RestAssured
                 .given().log().all()
                 .body(new Member("brown", 20))
                 .contentType(ContentType.JSON)
@@ -28,7 +28,7 @@ class CRUDTest {
     void read() {
         create();
 
-        var response = RestAssured
+        final var response = RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
                 .when().get("/members")
@@ -42,7 +42,7 @@ class CRUDTest {
     void update() {
         create();
 
-        var response = RestAssured
+        final var response = RestAssured
                 .given().log().all()
                 .body(new Member("brown", 30))
                 .contentType(ContentType.JSON)
@@ -56,7 +56,7 @@ class CRUDTest {
     void delete() {
         create();
 
-        var response = RestAssured
+        final var response = RestAssured
                 .given().log().all()
                 .when().delete("/members/1")
                 .then().log().all().extract();
