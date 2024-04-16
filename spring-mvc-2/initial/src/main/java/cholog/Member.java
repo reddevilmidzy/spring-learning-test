@@ -8,13 +8,13 @@ public class Member {
     public Member() {
     }
 
-    public Member(Long id, String name, int age) {
+    public Member(final Long id, final String name, final int age) {
         this.id = id;
         this.name = name;
         this.age = age;
     }
 
-    public Member(String name, int age) {
+    public Member(final String name, final int age) {
         this.name = name;
         this.age = age;
     }
@@ -31,11 +31,11 @@ public class Member {
         return age;
     }
 
-    public static Member toEntity(Member member, Long id) {
+    public static Member toEntity(final Member member, final Long id) {
         return new Member(id, member.name, member.age);
     }
 
-    public void update(Member newMember) {
+    public void update(final Member newMember) {
         this.name = newMember.name;
         this.age = newMember.age;
     }

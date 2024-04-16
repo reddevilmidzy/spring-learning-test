@@ -35,9 +35,9 @@ public class MemberController {
     @PutMapping("/members/{id}")
     public ResponseEntity<Void> update(@RequestBody Member newMember, @PathVariable Long id) {
         Member member = members.stream()
-            .filter(it -> Objects.equals(it.getId(), id))
-            .findFirst()
-            .orElseThrow(RuntimeException::new);
+                .filter(it -> Objects.equals(it.getId(), id))
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
 
         member.update(newMember);
         return ResponseEntity.ok().build();
@@ -46,9 +46,9 @@ public class MemberController {
     @DeleteMapping("/members/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         Member member = members.stream()
-            .filter(it -> Objects.equals(it.getId(), id))
-            .findFirst()
-            .orElseThrow(RuntimeException::new);
+                .filter(it -> Objects.equals(it.getId(), id))
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
 
         members.remove(member);
 
