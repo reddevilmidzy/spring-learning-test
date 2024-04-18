@@ -28,7 +28,7 @@ class UpdatingDaoTest {
         jdbcTemplate.execute("CREATE TABLE customers(" +
                 "id SERIAL, first_name VARCHAR(255), last_name VARCHAR(255))");
 
-        List<Object[]> splitUpNames = Arrays.asList("John Woo", "Jeff Dean", "Josh Bloch", "Josh Long").stream()
+        final List<Object[]> splitUpNames = Arrays.asList("John Woo", "Jeff Dean", "Josh Bloch", "Josh Long").stream()
                 .map(name -> name.split(" "))
                 .collect(Collectors.toList());
 
@@ -37,25 +37,25 @@ class UpdatingDaoTest {
 
     @Test
     void insert() {
-        Customer customer = new Customer("Leonor", "Watling");
+        final Customer customer = new Customer("Leonor", "Watling");
         updatingDAO.insert(customer);
 
-        List<Customer> customers = queryingDAO.findCustomerByFirstName("Leonor");
+        final List<Customer> customers = queryingDAO.findCustomerByFirstName("Leonor");
 
         assertThat(customers).hasSize(1);
     }
 
     @Test
     void delete() {
-        int rowNum = updatingDAO.delete(1L);
+        final int rowNum = updatingDAO.delete(1L);
 
         assertThat(rowNum).isEqualTo(1);
     }
 
     @Test
     void keyHolder() {
-        Customer customer = new Customer("Leonor", "Watling");
-        Long id = updatingDAO.insertWithKeyHolder(customer);
+        final Customer customer = new Customer("Leonor", "Watling");
+        final Long id = updatingDAO.insertWithKeyHolder(customer);
 
         assertThat(id).isNotNull();
     }

@@ -76,7 +76,6 @@ public class QueryingDAO {
      */
     public List<Customer> findCustomerByFirstName(final String firstName) {
         final String query = "select id, first_name, last_name from customers where first_name = ?";
-        //TODO : firstName을 기준으로 customer를 list형태로 반환
         return jdbcTemplate.query(query, (rs, rowNum) -> {
             final Customer customer = new Customer(
                     rs.getLong("id"),
