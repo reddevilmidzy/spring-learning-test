@@ -14,4 +14,9 @@ public class SetterInjection {
     public String sayHello() {
         return injectionBean.hello();
     }
+
+    @Autowired
+    public void setInjectionBean(final InjectionBean injectionBean) {
+        this.injectionBean = injectionBean;
+    }
 }

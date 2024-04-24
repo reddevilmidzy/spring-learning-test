@@ -1,19 +1,19 @@
 package cholog;
 
+import static cholog.utils.ContextUtils.getApplicationContext;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import cholog.bean.AutowiredBean;
 import cholog.bean.SpringBean;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 
-import static cholog.utils.ContextUtils.getApplicationContext;
-import static org.assertj.core.api.Assertions.assertThat;
-
-public class BeanTest {
+class BeanTest {
 
     @Test
     void registerBean() {
-        ApplicationContext context = getApplicationContext();
-        SpringBean springBean = context.getBean("springBean", SpringBean.class);
+        final ApplicationContext context = getApplicationContext();
+        final SpringBean springBean = context.getBean("springBean", SpringBean.class);
         assertThat(springBean).isNotNull();
     }
 
