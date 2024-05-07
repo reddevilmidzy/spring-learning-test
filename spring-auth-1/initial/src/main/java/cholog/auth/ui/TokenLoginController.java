@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -17,7 +18,7 @@ public class TokenLoginController {
     private final AuthService authService;
     private final AuthorizationExtractor<String> authorizationExtractor;
 
-    public TokenLoginController(AuthService authService) {
+    public TokenLoginController(final AuthService authService) {
         this.authService = authService;
         this.authorizationExtractor = new BearerAuthorizationExtractor();
     }
@@ -35,9 +36,7 @@ public class TokenLoginController {
      * }
      */
     @PostMapping("/login/token")
-    public ResponseEntity<TokenResponse> tokenLogin() {
-        // TODO: email, password 정보를 가진 TokenRequest 값을 메서드 파라미터로 받아오기 (hint: @RequestBody)
-        TokenRequest tokenRequest = null;
+    public ResponseEntity<TokenResponse> tokenLogin(@RequestBody final TokenRequest tokenRequest) {
         TokenResponse tokenResponse = authService.createToken(tokenRequest);
         return ResponseEntity.ok().body(tokenResponse);
     }
@@ -50,9 +49,8 @@ public class TokenLoginController {
      * accept: application/json
      */
     @GetMapping("/members/me/token")
-    public ResponseEntity<MemberResponse> findMyInfo(HttpServletRequest request) {
-        // TODO: authorization 헤더의 Bearer 값을 추출 (hint: authorizationExtractor 사용)
-        String token = "";
+    public ResponseEntity<MemberResponse> findMyInfo(final HttpServletRequest request) {
+        String token = authorizationExtractor.extract(request);
         MemberResponse member = authService.findMemberByToken(token);
         return ResponseEntity.ok().body(member);
     }

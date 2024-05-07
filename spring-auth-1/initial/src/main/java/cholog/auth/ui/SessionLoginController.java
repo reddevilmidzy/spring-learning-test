@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
 @RestController
 public class SessionLoginController {
     private static final String SESSION_KEY = "USER";
@@ -20,7 +18,7 @@ public class SessionLoginController {
 
     private final AuthService authService;
 
-    public SessionLoginController(AuthService authService) {
+    public SessionLoginController(final AuthService authService) {
         this.authService = authService;
     }
 
@@ -34,17 +32,15 @@ public class SessionLoginController {
      * email=email@email.com&password=1234
      */
     @PostMapping("/login/session")
-    public ResponseEntity<Void> sessionLogin(HttpServletRequest request, HttpSession session) {
-        // TODO: HttpRequest로 받은 email과 password 추출
-        String email = "";
-        String password = "";
+    public ResponseEntity<Void> sessionLogin(final HttpServletRequest request, final HttpSession session) {
+        final String email = request.getParameter(USERNAME_FIELD);
+        final String password = request.getParameter(PASSWORD_FIELD);
 
         if (authService.checkInvalidLogin(email, password)) {
             throw new AuthorizationException();
         }
 
-        // TODO: Session에 인증 정보 저장 (key: SESSION_KEY, value: email값)
-
+        session.setAttribute(SESSION_KEY, email);
         return ResponseEntity.ok().build();
     }
 
@@ -56,10 +52,9 @@ public class SessionLoginController {
      * accept: application/json
      */
     @GetMapping("/members/me/session")
-    public ResponseEntity<MemberResponse> findMyInfo(HttpSession session) {
-        // TODO: Session을 통해 인증 정보 조회 (key: SESSION_KEY)
-        String email = "";
-        MemberResponse member = authService.findMember(email);
+    public ResponseEntity<MemberResponse> findMyInfo(final HttpSession session) {
+        final String email = (String) session.getAttribute(SESSION_KEY);
+        final MemberResponse member = authService.findMember(email);
         return ResponseEntity.ok().body(member);
     }
 }
