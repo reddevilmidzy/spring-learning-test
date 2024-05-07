@@ -20,6 +20,7 @@ public class MemberController {
 
     @GetMapping("/admin/members")
     public ResponseEntity<List<MemberResponse>> showMembers() {
+        System.out.println("111 = " + 111);
         List<MemberResponse> memberResponses = Arrays.asList(
                 new MemberResponse(),
                 new MemberResponse(),
@@ -43,6 +44,4 @@ public class MemberController {
         );
         return ResponseEntity.ok().body(favoriteResponses);
     }
-
-
 }
