@@ -8,20 +8,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
-public class RestTemplateTest {
+class RestTemplateTest {
 
     @Autowired
     private TodoClientWithRestTemplate todoClient;
 
     @Test
-    public void testGetTodoWithId() {
-        Todo todo = todoClient.getTodoById(1L);
+    void testGetTodoWithId() {
+        final Todo todo = todoClient.getTodoById(1L);
         assertThat(todo.getTitle()).isNotEmpty();
     }
 
     @Test
-    public void testGetTodoWithNonExistentId() {
-        Long nonExistentId = 9999L;
+    void testGetTodoWithNonExistentId() {
+        final Long nonExistentId = 9999L;
 
         assertThatThrownBy(() -> todoClient.getTodoById(nonExistentId))
                 .isInstanceOf(TodoException.NotFound.class);

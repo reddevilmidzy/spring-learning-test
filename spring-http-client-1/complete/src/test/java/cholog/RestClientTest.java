@@ -10,25 +10,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
-public class RestClientTest {
+class RestClientTest {
 
     @Autowired
     private TodoClientWithRestClient todoClient;
 
     @Test
-    public void testGetTodos() {
+    void testGetTodos() {
         List<Todo> todos = todoClient.getTodos();
         assertThat(todos).isNotEmpty();
     }
 
     @Test
-    public void testGetTodoWithId() {
+    void testGetTodoWithId() {
         Todo todo = todoClient.getTodoById(1L);
         assertThat(todo.getTitle()).isNotEmpty();
     }
 
     @Test
-    public void testGetTodoWithNonExistentId() {
+    void testGetTodoWithNonExistentId() {
         Long nonExistentId = 9999L;
 
         assertThatThrownBy(() -> todoClient.getTodoById(nonExistentId))
