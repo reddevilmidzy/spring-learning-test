@@ -9,7 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class RepositoryTest {
+class RepositoryTest {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -20,6 +20,7 @@ public class RepositoryTest {
     @Test
     void save() {
         customerRepository.save(new Customer("Jack", "Bauer"));
+        customerRepository.save(new Customer("Chloe", "why"));
 
         Iterable<Customer> customers = customerRepository.findAll();
         assertThat(customers).extracting(Customer::getFirstName).containsOnly("Jack", "Chloe");
@@ -36,8 +37,12 @@ public class RepositoryTest {
 
     @Test
     void findById() {
-        entityManager.persist(new Customer("Jack", "Bauer"));
+        final Customer target = new Customer("Jack", "Bauer");
+        entityManager.persist(target);
         entityManager.persist(new Customer("Chloe", "O'Brian"));
+
+        entityManager.flush();
+        entityManager.clear();
 
         Customer customer = customerRepository.findById(1L).orElseThrow(IllegalArgumentException::new);
         assertThat(customer.getFirstName()).isEqualTo("Jack");

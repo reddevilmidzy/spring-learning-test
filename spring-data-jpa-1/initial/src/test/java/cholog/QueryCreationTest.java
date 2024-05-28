@@ -11,7 +11,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class QueryCreationTest {
+class QueryCreationTest {
 
     @PersistenceContext
     private EntityManager entityManager;
